@@ -1,0 +1,15 @@
+name: "JSON file reader and modifier"
+description: "Update a JSON file to add commit and date as atributes to it."
+inputs:
+  json:
+    description: "JSON to commit/date ify"
+    required: true
+outputs:
+  json:
+    description: "The JSON that was commit/date ified"
+runs:
+  using: "node12"
+  main: "dist/index.js"
+branding:
+  icon: "settings"
+  color: "red"
