@@ -16,14 +16,11 @@ try {
   const date = payload.commits[0].timestamp;
   const repoFullName = payload.repository.full_name;
 
-  let archinautResults = {};
-
   csv().fromFile(input).then((parseResult) => {
-    archinautResults = parseResult;
+    console.log("Results: " + JSON.stringify(parseResult));
   })
-
+  
   console.log(`Commit id: ${commitId} date: ${date} repository name: ${repoFullName}`);
-  console.log("Results: " + JSON.stringify(archinautResults));
 
 } catch (error) {
   core.setFailed(error.message);
