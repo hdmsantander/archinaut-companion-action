@@ -10,6 +10,7 @@ const github = __webpack_require__(8457);
 const fs = __webpack_require__(5747);
 const csv = __webpack_require__(1812); 
 const aws = __webpack_require__(3795);
+const { parse } = __webpack_require__(5622);
 
 
 try {
@@ -24,10 +25,17 @@ try {
   const repoFullName = payload.repository.full_name;
 
   csv().fromFile(input).then((parseResult) => {
-    console.log("Results: " + JSON.stringify(parseResult));
+
+    let output = {};
+
+    output.commitId = commitId;
+    output.date = date;
+    output.repoFullName = repoFullName;
+    output.files = parseResult;
+
+    console.log("Results: " + JSON.stringify(output));
+
   })
-  
-  console.log(`Commit id: ${commitId} date: ${date} repository name: ${repoFullName}`);
 
 } catch (error) {
   core.setFailed(error.message);

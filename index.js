@@ -3,6 +3,7 @@ const github = require('@actions/github');
 const fs = require('fs');
 const csv = require("csvtojson"); 
 const aws = require('aws-sdk/clients/lambda');
+const { parse } = require('path');
 
 
 try {
@@ -17,10 +18,17 @@ try {
   const repoFullName = payload.repository.full_name;
 
   csv().fromFile(input).then((parseResult) => {
-    console.log("Results: " + JSON.stringify(parseResult));
+
+    let output = {};
+
+    output.commitId = commitId;
+    output.date = date;
+    output.repoFullName = repoFullName;
+    output.files = parseResult;
+
+    console.log("Results: " + JSON.stringify(output));
+
   })
-  
-  console.log(`Commit id: ${commitId} date: ${date} repository name: ${repoFullName}`);
 
 } catch (error) {
   core.setFailed(error.message);
