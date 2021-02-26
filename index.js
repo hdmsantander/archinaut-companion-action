@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const fs = require('fs');
-const csvToJson = require('convert-csv-to-json');
+const csv = require("csvtojson"); 
 const aws = require('aws-sdk/clients/lambda');
 
 
@@ -16,7 +16,11 @@ try {
   const date = payload.commits[0].timestamp;
   const repoFullName = payload.repository.full_name;
 
-  const archinautResults = csvToJson.getJsonFromCsv(input);
+  let archinautResults = {};
+
+  csv().fromFile(input).then((parseResult) => {
+    archinautResults = parseResult;
+  })
 
   console.log(`Commit id: ${commitId} date: ${date} repository name: ${repoFullName}`);
   console.log("Results: " + JSON.stringify(archinautResults));
