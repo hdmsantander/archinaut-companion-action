@@ -15,9 +15,6 @@ inputs:
     description: "Region where the lambda has been created (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)"
     required: false
     default: us-east-1
-outputs:
-  response: # id of output
-    description: "response from lambda invocation"
 runs:
   using: "node12"
   main: "dist/index.js"

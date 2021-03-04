@@ -52,9 +52,7 @@ try {
 
     console.log("Results: " + JSON.stringify(output));
 
-    const response = lambda.invoke({FunctionName:'putDataAnalysis', Payload: JSON.stringify(output, null, 2), InvocationType: 'RequestResponse', LogType: 'None'});
-
-    core.setOutput('response', response);
+    lambda.invoke({FunctionName:'putDataAnalysis', Payload: JSON.stringify(output), InvocationType: 'RequestResponse', LogType: 'None'});
 
   })
 
