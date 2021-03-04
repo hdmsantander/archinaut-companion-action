@@ -2,9 +2,22 @@ name: "Archinaut companion action"
 description: "Companion to the Archinaut Action."
 inputs:
   results:
-    description: "JSON to commit/date ify"
+    description: "Archinaut results CSV file"
     default: 'archinaut.csv'
     required: false
+  AWS_ACCESS_KEY_ID:
+    description: "AWS_ACCESS_KEY_ID"
+    required: true
+  AWS_SECRET_ACCESS_KEY:
+    description: "AWS_SECRET_ACCESS_KEY"
+    required: true
+  REGION:
+    description: "Region where the lambda has been created (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)"
+    required: false
+    default: us-east-1
+outputs:
+  response: # id of output
+    description: "response from lambda invocation"
 runs:
   using: "node12"
   main: "dist/index.js"

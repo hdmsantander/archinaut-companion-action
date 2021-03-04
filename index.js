@@ -1,10 +1,10 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
-const fs = require('fs');
 const csv = require("csvtojson"); 
-const aws = require('aws-sdk/clients/lambda');
-const { parse } = require('path');
 
+import Lambda from 'aws-sdk/clients/lambda';
+import AWS from 'aws-sdk/global'
+
+const apiVersion = '2015-03-31';
 
 try {
 
@@ -17,16 +17,30 @@ try {
   const date = payload.commits[0].timestamp;
   const repoFullName = payload.repository.full_name;
 
+  const awsCredentials = new AWS.Credentials();
+  awsCredentials.accessKeyId = core.getInput('AWS_ACCESS_KEY_ID');
+  awsCredentials.secretAccessKey = core.getInput('AWS_SECRET_ACCESS_KEY');
+
+  const awsConfig = new AWS.Config({
+    credentials: awsCredentials, region: core.getInput('REGION')
+  })
+
+  const lambda = new Lambda({apiVersion, region: core.getInput('REGION')});
+
   csv().fromFile(input).then((parseResult) => {
 
     let output = {};
 
-    output.commitId = commitId;
+    output.idCommit = commitId;
     output.date = date;
-    output.repoFullName = repoFullName;
+    output.id = repoFullName.replaceAll("/", "-");
     output.files = parseResult;
 
     console.log("Results: " + JSON.stringify(output));
+
+    const response = lambda.invoke({FunctionName:'putDataAnalysis', Payload: JSON.stringify(output), InvocationType: 'RequestResponse'});
+
+    core.setOutput('response', response);
 
   })
 
