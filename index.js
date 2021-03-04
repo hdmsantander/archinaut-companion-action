@@ -1,4 +1,5 @@
 const core = require('@actions/core');
+const github = require('@actions/github');
 const csv = require("csvtojson"); 
 
 import Lambda from 'aws-sdk/clients/lambda';
