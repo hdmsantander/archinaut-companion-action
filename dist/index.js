@@ -47,7 +47,7 @@ try {
 
     output.idCommit = commitId;
     output.date = date;
-    output.id = repoFullName.replaceAll("/", "-");
+    output.id = repoFullName.split("/").join("-");
     output.files = parseResult;
 
     console.log("Results: " + JSON.stringify(output));
