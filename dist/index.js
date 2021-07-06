@@ -29,7 +29,7 @@ try {
       output.id = repoFullName.split('/').join('-');
       output.files = parseResult;
 
-      fs.writeFile('archinaut.json', JSON.stringify(output));
+      fs.writeFileSync('archinaut.json', JSON.stringify(output));
     });
 } catch (error) {
   core.setFailed(error.message);
