@@ -1,10 +1,14 @@
-# Archinaut companion action 
+# archinaut companion action
 
-This action is a companion to the Archinaut Action. It updates pull requests (if they exist) with the results of the execution of the Archinaut action, it can also upload the results of the scan.
+This action is a companion to the [archinaut action](https://github.com/hdmsantander/archinaut-action). It generates a JSON object called _archinaut.json_ with the contents of the [archinaut](https://github.com/hdmsantander/archinaut) CSV results file, plus the following info as atributes within the JSON object:
+
+- Commit ID (idCommit)
+- Date of execution (date)
+- Name of the repository (id)
 
 The project is compiled using **ncc**.
 
-```
+```BASH
 ncc build index.js --license licenses.txt
 ```
 
@@ -12,7 +16,7 @@ ncc build index.js --license licenses.txt
 
 ### `results`
 
-**Required** The CSV filename containing the archinaut results. Default is *archinaut.csv*
+**Required** The CSV filename containing the archinaut results. Default is _archinaut.csv_
 
 ## Example usage of action
 
@@ -24,7 +28,4 @@ _.github/workflows/main.yml_
   uses: hdmsantander/archinaut-companion-action@main
   with:
     results: ${{ env.workspace }} archinaut.csv
-    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    REGION: us-east-2
 ```
